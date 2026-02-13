@@ -1,83 +1,574 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NUR1K | Уроки химии</title>
-  <meta name="description" content="Уроки химии для школьников. Подготовка к олимпиадам и разбор задач.">
+  <meta name="description" content="Уроки химии для школьников: бесплатно 1 раз в неделю или премиум 4 раза в неделю за 50 сом." />
+
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: white;
-      text-align: center;
+    :root{
+      --bg1:#0b1220;
+      --bg2:#0f1b31;
+      --card: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.12);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.72);
+      --accent: #ffb020;
+      --accent2:#7c5cff;
+      --ok:#35d07f;
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
     }
-    header {
-      padding: 60px 20px;
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(124,92,255,.28), transparent 60%),
+        radial-gradient(900px 500px at 90% 0%, rgba(255,176,32,.22), transparent 55%),
+        radial-gradient(900px 700px at 40% 110%, rgba(53,208,127,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
     }
-    h1 {
-      font-size: 38px;
-      margin-bottom: 10px;
+
+    /* subtle animated stars */
+    .stars::before, .stars::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.22) 40%, transparent 41%),
+        radial-gradient(2px 2px at 30% 80%, rgba(255,255,255,.18) 40%, transparent 41%),
+        radial-gradient(2px 2px at 60% 30%, rgba(255,255,255,.16) 40%, transparent 41%),
+        radial-gradient(2px 2px at 80% 60%, rgba(255,255,255,.20) 40%, transparent 41%),
+        radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,.18) 40%, transparent 41%),
+        radial-gradient(1px 1px at 75% 15%, rgba(255,255,255,.16) 40%, transparent 41%),
+        radial-gradient(1px 1px at 55% 75%, rgba(255,255,255,.16) 40%, transparent 41%);
+      opacity:.55;
+      pointer-events:none;
+      animation: drift 18s linear infinite;
     }
-    p {
-      font-size: 18px;
-      max-width: 700px;
-      margin: 15px auto;
-      line-height: 1.6;
+    .stars::after{
+      opacity:.35;
+      filter: blur(0.2px);
+      animation-duration: 26s;
     }
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 25px;
+    @keyframes drift{
+      from{ transform: translateY(0px); }
+      to{ transform: translateY(40px); }
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .container{
+      width:min(1050px, 92vw);
+      margin:0 auto;
+      padding: 26px 0 70px;
+    }
+
+    /* top nav */
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 10px 0 18px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      letter-spacing:.4px;
+    }
+    .logo{
+      width:38px; height:38px;
+      border-radius:14px;
+      background: linear-gradient(135deg, rgba(255,176,32,.9), rgba(124,92,255,.85));
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 55%);
+      transform: rotate(12deg);
+      animation: shine 4.5s ease-in-out infinite;
+    }
+    @keyframes shine{
+      0%,100%{ transform: translateX(-10%) rotate(12deg); opacity:.55;}
+      50%{ transform: translateX(15%) rotate(12deg); opacity:.75;}
+    }
+
+    .navlinks{
+      display:flex; gap:14px; flex-wrap:wrap;
+      font-size:14px; color:var(--muted);
+    }
+    .navlinks a{
+      padding:8px 10px;
+      border:1px solid transparent;
+      border-radius:12px;
+      transition: .2s ease;
+    }
+    .navlinks a:hover{
+      border-color: var(--stroke);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+
+    .cta{
+      display:flex; gap:10px; align-items:center;
+    }
+    .btn{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      transition: .18s ease;
+      font-weight:650;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.07); }
+    .btn.accent{
+      border-color: rgba(255,176,32,.55);
+      background: linear-gradient(135deg, rgba(255,176,32,.28), rgba(124,92,255,.18));
+    }
+
+    /* hero */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-top: 8px;
+    }
+    @media (max-width: 880px){
+      .hero{ grid-template-columns: 1fr; }
+    }
+
+    .panel{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      position: relative;
+      overflow:hidden;
+    }
+    .panel::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background: radial-gradient(600px 220px at 20% 0%, rgba(255,176,32,.16), transparent 55%),
+                  radial-gradient(520px 200px at 80% 0%, rgba(124,92,255,.16), transparent 55%);
+      pointer-events:none;
+    }
+    .panel > *{ position:relative; z-index:1; }
+
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,0.18);
+      color: var(--muted);
+      font-size: 13px;
+      width: fit-content;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:99px;background: var(--ok);
+      box-shadow: 0 0 14px rgba(53,208,127,.5);
+    }
+
+    h1{
+      margin: 14px 0 10px;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.05;
+      letter-spacing:-0.6px;
+    }
+    .subtitle{
+      color: var(--muted);
       font-size: 16px;
-      border-radius: 8px;
-      background: #ff9800;
-      color: white;
-      text-decoration: none;
+      line-height:1.55;
+      max-width: 60ch;
     }
-    .btn:hover {
-      background: #ffb74d;
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 16px;
     }
-    section {
-      padding: 40px 20px;
+
+    .stats{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
-    footer {
-      padding: 20px;
-      background: rgba(0,0,0,0.3);
-      margin-top: 40px;
+    @media (max-width: 520px){
+      .stats{ grid-template-columns: 1fr; }
+    }
+    .stat{
+      padding: 12px 12px;
+      border-radius: 16px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,0.03);
+    }
+    .stat b{ font-size: 18px; display:block; }
+    .stat span{ color:var(--muted); font-size: 13px; }
+
+    /* pricing cards */
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 560px){
+      .grid2{ grid-template-columns:1fr; }
+    }
+    .price{
+      border-radius: 20px;
+      padding: 18px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,0.03);
+      transition:.2s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .price:hover{ transform: translateY(-2px); background: rgba(255,255,255,0.05); }
+    .price.premium{
+      border-color: rgba(255,176,32,.45);
+      background: linear-gradient(135deg, rgba(255,176,32,.12), rgba(124,92,255,.10));
+    }
+    .price h3{ margin: 0 0 6px; font-size: 18px; }
+    .price .p{
+      color:var(--muted);
+      font-size: 14px;
+      margin:0 0 10px;
+      line-height:1.5;
+    }
+    .money{
+      display:flex; align-items:baseline; gap:8px;
+      margin: 10px 0 10px;
+    }
+    .money .val{
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing:-.5px;
+    }
+    .money .per{ color: var(--muted); font-size: 13px; }
+    .ul{
+      margin: 10px 0 0;
+      padding: 0;
+      list-style:none;
+      display:grid;
+      gap:8px;
+      color:var(--muted);
+      font-size: 14px;
+    }
+    .ul li{
+      display:flex; gap:8px; align-items:flex-start;
+    }
+    .tick{
+      width:18px; height:18px; border-radius: 8px;
+      background: rgba(53,208,127,.18);
+      border:1px solid rgba(53,208,127,.35);
+      display:grid; place-items:center;
+      flex:0 0 18px;
+      margin-top: 1px;
+      font-size: 12px;
+      color: rgba(255,255,255,.9);
+    }
+
+    /* sections */
+    .section{
+      margin-top: 16px;
+    }
+    .section h2{
+      margin: 0 0 10px;
+      font-size: 20px;
+      letter-spacing:-.2px;
+    }
+    .muted{ color:var(--muted); }
+
+    .lessonlist{
+      display:grid;
+      gap:10px;
+      margin-top: 10px;
+    }
+    .lesson{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 12px 12px;
+      align-items:center;
+    }
+    .lesson .left{
+      display:flex; flex-direction:column; gap:3px;
+      text-align:left;
+    }
+    .lesson .title{ font-weight: 750; }
+    .lesson .desc{ color:var(--muted); font-size: 13px; }
+    .tag{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      color: var(--muted);
+      background: rgba(0,0,0,0.15);
+      white-space:nowrap;
+    }
+    .tag.free{ border-color: rgba(53,208,127,.35); color: rgba(255,255,255,.86); }
+    .tag.pro{ border-color: rgba(255,176,32,.45); color: rgba(255,255,255,.9); }
+
+    /* reveal animation */
+    .reveal{
+      opacity:0;
+      transform: translateY(14px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.show{
+      opacity:1;
+      transform: translateY(0px);
+    }
+
+    footer{
+      margin-top: 18px;
+      padding: 18px 0 0;
+      color: rgba(255,255,255,.6);
+      font-size: 13px;
+      text-align:center;
+    }
+
+    /* small helper */
+    .small{
+      font-size: 12.5px;
+      color: rgba(255,255,255,.62);
+      line-height: 1.45;
     }
   </style>
 </head>
-<body>
 
-<header>
-  <h1>Уроки химии 🔥</h1>
-  <p> Подготовка к районной олимпиаде, разбор задач.</p>
-  <a href="#" class="btn">Связаться</a>
-</header>
+<body class="stars">
+  <div class="container">
+    <div class="nav reveal">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div>NUR1K</div>
+          <div class="small">Уроки химии для школьников</div>
+        </div>
+      </div>
 
-<section>
-  <h2>📚 Что здесь есть</h2>
-  <p>
-    • Разбор задач районного уровня<br>
-    • Подготовка к районным олимпиадам<br>
-    • Простые объяснения тем<br>
-    • Конспекты и примеры решений
-  </p>
-</section>
+      <div class="navlinks">
+        <a href="#уроки">Уроки</a>
+        <a href="#тарифы">Тарифы</a>
+        <a href="#как-это-работает">Как проходит</a>
+        <a href="#контакты">Контакты</a>
+      </div>
 
-<section>
-  <h2>🚀 Моя цель</h2>
-  <p>
-    Помогать школьникам понимать химию глубоко, а не зубрить формулы.
-    Развиваться и идти к высоким результатам.
-  </p>
-</section>
+      <div class="cta">
+        <a class="btn" href="#уроки">📚 Смотреть уроки</a>
+        <a class="btn accent" href="#тарифы">⭐ Премиум</a>
+      </div>
+    </div>
 
-<footer>
-  © 2026 NUR1K. Все права защищены.
-</footer>
+    <div class="hero">
+      <!-- left hero -->
+      <div class="panel reveal">
+        <div class="badge">
+          <span class="dot"></span>
+          <span>Бесплатный урок каждую неделю + премиум 4 раза/нед</span>
+        </div>
 
+        <h1>Химия понятным языком —<br>без зубрёжки 📌</h1>
+
+        <p class="subtitle">
+          Разбор задач, теория по темам и практика. Подойдёт школьникам, кто хочет подтянуть химию и
+          готовиться к олимпиадам.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn accent" href="#тарифы">Выбрать тариф</a>
+          <a class="btn" href="#контакты">Написать мне</a>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <b>1×</b><span>в неделю — бесплатно</span>
+          </div>
+          <div class="stat">
+            <b>4×</b><span>в неделю — премиум</span>
+          </div>
+          <div class="stat">
+            <b>50 сом</b><span>премиум-доступ</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- right hero (pricing preview) -->
+      <div class="panel reveal" id="тарифы">
+        <h2 style="margin:0 0 8px;">Тарифы 💳</h2>
+        <div class="muted" style="font-size:14px; line-height:1.5;">
+          Выбирай: бесплатно раз в неделю или премиум с разбором и заданиями.
+        </div>
+
+        <div class="grid2">
+          <div class="price reveal">
+            <h3>Бесплатно ✅</h3>
+            <p class="p">1 урок в неделю</p>
+            <div class="money">
+              <div class="val">0 сом</div>
+              <div class="per">/неделя</div>
+            </div>
+            <ul class="ul">
+              <li><span class="tick">✓</span> 1 урок в неделю</li>
+              <li><span class="tick">✓</span> База + примеры</li>
+              <li><span class="tick">✓</span> Короткие домашки (по желанию)</li>
+            </ul>
+            <div style="margin-top:12px;">
+              <a class="btn" href="#уроки">Начать бесплатно</a>
+            </div>
+          </div>
+
+          <div class="price premium reveal">
+            <h3>Премиум ⭐</h3>
+            <p class="p">4 урока в неделю</p>
+            <div class="money">
+              <div class="val">50 сом</div>
+              <div class="per">/неделя</div>
+            </div>
+            <ul class="ul">
+              <li><span class="tick">✓</span> 4 урока в неделю</li>
+              <li><span class="tick">✓</span> Разбор задач + практика</li>
+              <li><span class="tick">✓</span> Домашка + проверка (по договорённости)</li>
+            </ul>
+            <div style="margin-top:12px;">
+              <a class="btn accent" href="#контакты">Подключить премиум</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="small" style="margin-top:12px;">
+          *Оплата и формат (группа/лично) — уточняется в сообщениях.
+        </p>
+      </div>
+    </div>
+
+    <!-- lessons -->
+    <div class="panel section reveal" id="уроки">
+      <h2>Уроки 📚</h2>
+      <div class="muted">Сюда ты каждую неделю добавляешь новые темы. Ниже — пример списка.</div>
+
+      <div class="lessonlist">
+        <div class="lesson reveal">
+          <div class="left">
+            <div class="title">Урок #1: Моль, молярная масса, задачи</div>
+            <div class="desc">Самая база, чтобы решать 70% задач.</div>
+          </div>
+          <div class="tag free">Бесплатно</div>
+        </div>
+
+        <div class="lesson reveal">
+          <div class="left">
+            <div class="title">Урок #2: Растворы и концентрации</div>
+            <div class="desc">C, n, V — чтобы не путаться в разбавлениях.</div>
+          </div>
+          <div class="tag free">Бесплатно</div>
+        </div>
+
+        <div class="lesson reveal">
+          <div class="left">
+            <div class="title">Премиум #1: pH, pOH + задачки</div>
+            <div class="desc">Разбор формул + тренировка на задачах.</div>
+          </div>
+          <div class="tag pro">Премиум</div>
+        </div>
+
+        <div class="lesson reveal">
+          <div class="left">
+            <div class="title">Премиум #2: Электрохимия (электролиз)</div>
+            <div class="desc">Фарадей, заряд, время — понятно и быстро.</div>
+          </div>
+          <div class="tag pro">Премиум</div>
+        </div>
+      </div>
+
+      <p class="small" style="margin-top:12px;">
+        Хочешь — сделаю кнопки “Открыть урок” и отдельные страницы уроков (lesson1.html, lesson2.html).
+      </p>
+    </div>
+
+    <!-- how it works -->
+    <div class="panel section reveal" id="как-это-работает">
+      <h2>Как проходят уроки 🎯</h2>
+      <div class="muted" style="line-height:1.6;">
+        1) Ты выбираешь тариф<br>
+        2) Получаешь расписание уроков на неделю<br>
+        3) Уроки: теория + примеры + задачи<br>
+        4) Премиум: больше практики и разбор решений
+      </div>
+    </div>
+
+    <!-- contacts -->
+    <div class="panel section reveal" id="контакты">
+      <h2>Контакты 📩</h2>
+      <p class="muted">Нажми кнопку и напиши мне. Вставь сюда свои ссылки (Telegram/Instagram).</p>
+
+      <div class="hero-actions">
+        <!-- Заменить ссылки на свои -->
+        <a class="btn accent" href="https://t.me/USERNAME" target="_blank" rel="noreferrer">✈️ Telegram</a>
+        <a class="btn" href="https://instagram.com/USERNAME" target="_blank" rel="noreferrer">📸 Instagram</a>
+      </div>
+
+      <p class="small" style="margin-top:10px;">
+        Подсказка: замени USERNAME на свой ник (например t.me/nur1k).
+      </p>
+    </div>
+
+    <footer class="reveal">
+      © <span id="year"></span> NUR1K • Сделано на GitHub Pages 🌍
+    </footer>
+  </div>
+
+  <script>
+    // year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // reveal on scroll
+    const items = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) e.target.classList.add("show");
+      }
+    }, { threshold: 0.12 });
+    items.forEach(el => io.observe(el));
+
+    // smooth anchor scrolling (nice on desktop)
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", (ev) => {
+        const id = a.getAttribute("href");
+        const target = document.querySelector(id);
+        if (!target) return;
+        ev.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", id);
+      });
+    });
+  </script>
 </body>
 </html>
